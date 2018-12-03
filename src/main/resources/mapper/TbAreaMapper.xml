@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.appmarket.market.mapper.TbAreaMapper" >
+  <resultMap id="BaseResultMap" type="com.appmarket.market.bean.TbArea" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.appmarket.market.bean.TbAreaExample" >
+    select *
+    from tb_area
+    <!--<if test="_parameter != null" >-->
+      <!--<include refid="Example_Where_Clause" />-->
+    <!--</if>-->
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="page != null" >
+      limit #{page.begin} , #{page.length}
+    </if>
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select *
+    from tb_area
+  </select>
+
+  <insert id="insert" parameterType="com.appmarket.market.bean.TbArea" >
+    insert into tb_area (name, remark,
+    createTime)
+    values (#{name,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+    #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <update id="update" parameterType="com.appmarket.market.bean.TbArea" >
+    update tb_area
+    <trim prefix="set" suffixOverrides=",">
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    WHERE  id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_area
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <select id="countByExample" parameterType="com.appmarket.market.bean.TbAreaExample" resultType="java.lang.Integer" >
+    select count(*) from tb_area
+    <!--<if test="_parameter != null" >-->
+      <!--<include refid="Example_Where_Clause" />-->
+    <!--</if>-->
+  </select>
+
+</mapper>

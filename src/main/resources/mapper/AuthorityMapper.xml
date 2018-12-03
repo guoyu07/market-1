@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.appmarket.market.mapper.AuthorityMapper" >
+    <resultMap id="BaseResultMap" type="com.appmarket.market.entity.TbRoleVo" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="memo" property="memo" jdbcType="VARCHAR" />
+        <result column="createUser" property="createUser" jdbcType="VARCHAR" />
+        <result column="sysLevel" property="sysLevel" jdbcType="INTEGER" />
+    </resultMap>
+
+    <resultMap id="childMenusMap" type="com.appmarket.market.entity.TbMenuVo">
+        <id column="childId" property="id"/>
+        <result column="childName" property="name" />
+        <result column="childEnName" property="shortEnName" />
+        <result column="childIcon" property="icon" />
+        <result column="childUrl" property="url" />
+        <result column="childParentId" property="parentId" />
+        <result column="childOrderby" property="orderby" />
+        <result column="childPermission" property="permissionList" />
+        <result column="childPerSign" property="permissionSign" />
+        <result column="childPer" property="permission" />
+        <result column="childStatus" property="status" />
+    </resultMap>
+
+    <resultMap id="MenuResultMap" type="com.appmarket.market.entity.TbMenuVo" >
+        <id column="ID" property="id" jdbcType="INTEGER" />
+        <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="short_en_name" property="shortEnName" jdbcType="VARCHAR" />
+        <result column="icon" property="icon" jdbcType="VARCHAR" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="orderby" property="orderby" jdbcType="INTEGER" />
+        <result column="permission_list" property="permissionList" jdbcType="VARCHAR" />
+        <result column="permission_sign" property="permissionSign" jdbcType="VARCHAR" />
+        <result column="permission" property="permission" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="DECIMAL" />
+        <collection property="childMenus" ofType="com.appmarket.market.entity.TbMenuVo" resultMap="childMenusMap">
+        </collection>
+    </resultMap>
+
+    <select id="selectRolesByUserId" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select a.* from tb_role a inner join tb_user_role b on a.id = b.role_id
+        WHERE b.user_account=#{userAccount,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="selectPermissionsByRoleId" resultType="java.util.HashMap" parameterType="java.lang.Integer" useCache="false">
+        select a.* from tb_role_menu a inner join tb_menu b on a.menu_id=b.id where b.status=1
+        <if test="roleId != null">and permission IS NOT NULL and role_id = #{roleId}</if>
+    </select>
+
+    <select id="selectMenuByUserId" resultMap="MenuResultMap" parameterType="java.lang.String" useCache="false">
+        SELECT
+        a.*, b.id childId,
+        b. NAME childName,
+        b.short_en_name childEnName,
+        b.icon childIcon,
+        b.url childUrl,
+        b.parent_id childParentId,
+        b.orderby childOrderby,
+        b.status childStatus,
+        b.permission_list childPermission,
+        c.permission_sign childPerSign,
+        c.permission childPer
+        FROM
+        tb_menu a
+        INNER JOIN tb_menu b ON a.id = b.parent_id
+        INNER JOIN tb_role_menu c ON b.id = c.menu_id
+        INNER JOIN tb_user_role d ON c.role_id = d.role_id
+        WHERE
+        a. STATUS = 1
+        AND b. STATUS = 1
+        <if test="userAccount != null">AND d.user_account = #{userAccount}</if>
+        ORDER BY
+        a.orderby,
+        b.orderby
+
+    </select>
+
+</mapper>

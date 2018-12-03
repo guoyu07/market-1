@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <properties resource="generator.properties"></properties>
+    <classPathEntry location="${jdbc.driverLocation}"/>
+    <context id="context" targetRuntime="com.kingson.common.mybatis.MyBatisGeneratorXml">
+
+        <!-- 禁止xml 合并 -->
+        <property name="mergeable" value="false"></property>
+
+        <!--分页组件-->
+        <plugin type="com.kingson.common.Plugin.PaginationPlugin"/>
+
+        <!--实体类序列化组件-->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+
+
+        <!-- 不生产注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!-- 数据库库链接-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="${jdbc.connectionURL}"
+                        userId="${jdbc.userId}" password="${jdbc.password}"/>
+
+        <!-- 实体类配置-->
+        <javaModelGenerator targetPackage="${javaModel.targetPackage}"
+                            targetProject="${javaModelGenerator.targetProject}">
+            <property name="enableSubPackages" value="true"/>
+        </javaModelGenerator>
+
+        <!-- mapper xml 配置 -->
+        <sqlMapGenerator targetPackage="${mapperXML.targetPackage}"
+                         targetProject="${sqlMapGenerator.targetProject}">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- mapper 接口类配置 -->
+        <javaClientGenerator targetPackage="${mapperInterface.targetPackage}" type="XMLMAPPER"
+                             targetProject="${javaClientGenerator.targetProject}">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table tableName="tb_terminal"  domainObjectName="TbTerminal">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+        <table tableName="tb_sys_app_store"  domainObjectName="TbSysAppStore">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+        <table tableName="tb_app_store"  domainObjectName="TbAppStore">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.appmarket.market.mapper.TbTerminalMapper" >
+  <resultMap id="BaseResultMap" type="com.appmarket.market.bean.TbTerminal" >
+    <id column="imei" property="imei" jdbcType="VARCHAR" />
+    <result column="groupid" property="groupid" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+    <result column="shop_phone" property="shopPhone" jdbcType="VARCHAR" />
+    <result column="shop_contacts" property="shopContacts" jdbcType="VARCHAR" />
+    <result column="shop_longitude" property="shopLongitude" jdbcType="DECIMAL" />
+    <result column="shop_latitude" property="shopLatitude" jdbcType="DECIMAL" />
+    <result column="sn" property="sn" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    imei, groupid, uid, shop_name, shop_phone, shop_contacts, shop_longitude, shop_latitude, 
+    sn, create_time, update_time,remark,area
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.appmarket.market.bean.TbTerminalExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_terminal
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="page != null" >
+      limit #{page.begin} , #{page.length}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_terminal
+    where imei = #{imei,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_terminal
+    where imei = #{imei,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.appmarket.market.bean.TbTerminalExample" >
+    delete from tb_terminal
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.appmarket.market.bean.TbTerminal" >
+    insert into tb_terminal (imei, groupid, uid, 
+      shop_name, shop_phone, shop_contacts, 
+      shop_longitude, shop_latitude, sn, 
+      create_time, update_time,remark,area)
+    values (#{imei,jdbcType=VARCHAR}, #{groupid,jdbcType=VARCHAR}, #{uid,jdbcType=INTEGER}, 
+      #{shopName,jdbcType=VARCHAR}, #{shopPhone,jdbcType=VARCHAR}, #{shopContacts,jdbcType=VARCHAR}, 
+      #{shopLongitude,jdbcType=DECIMAL}, #{shopLatitude,jdbcType=DECIMAL}, #{sn,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.appmarket.market.bean.TbTerminal" >
+    insert into tb_terminal
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="imei != null" >
+        imei,
+      </if>
+      <if test="groupid != null" >
+        groupid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="shopName != null" >
+        shop_name,
+      </if>
+      <if test="shopPhone != null" >
+        shop_phone,
+      </if>
+      <if test="shopContacts != null" >
+        shop_contacts,
+      </if>
+      <if test="shopLongitude != null" >
+        shop_longitude,
+      </if>
+      <if test="shopLatitude != null" >
+        shop_latitude,
+      </if>
+      <if test="sn != null" >
+        sn,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="imei != null" >
+        #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="groupid != null" >
+        #{groupid,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPhone != null" >
+        #{shopPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopContacts != null" >
+        #{shopContacts,jdbcType=VARCHAR},
+      </if>
+      <if test="shopLongitude != null" >
+        #{shopLongitude,jdbcType=DECIMAL},
+      </if>
+      <if test="shopLatitude != null" >
+        #{shopLatitude,jdbcType=DECIMAL},
+      </if>
+      <if test="sn != null" >
+        #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.appmarket.market.bean.TbTerminalExample" resultType="java.lang.Integer" >
+    select count(*) from tb_terminal
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_terminal
+    <set >
+      <if test="record.imei != null" >
+        imei = #{record.imei,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupid != null" >
+        groupid = #{record.groupid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopName != null" >
+        shop_name = #{record.shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopPhone != null" >
+        shop_phone = #{record.shopPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopContacts != null" >
+        shop_contacts = #{record.shopContacts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopLongitude != null" >
+        shop_longitude = #{record.shopLongitude,jdbcType=DECIMAL},
+      </if>
+      <if test="record.shopLatitude != null" >
+        shop_latitude = #{record.shopLatitude,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sn != null" >
+        sn = #{record.sn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null" >
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_terminal
+    set imei = #{record.imei,jdbcType=VARCHAR},
+      groupid = #{record.groupid,jdbcType=VARCHAR},
+      uid = #{record.uid,jdbcType=INTEGER},
+      shop_name = #{record.shopName,jdbcType=VARCHAR},
+      shop_phone = #{record.shopPhone,jdbcType=VARCHAR},
+      shop_contacts = #{record.shopContacts,jdbcType=VARCHAR},
+      shop_longitude = #{record.shopLongitude,jdbcType=DECIMAL},
+      shop_latitude = #{record.shopLatitude,jdbcType=DECIMAL},
+      sn = #{record.sn,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+    remark = #{record.remark,jdbcType=VARCHAR},
+    area = #{record.area,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.appmarket.market.bean.TbTerminal" >
+    update tb_terminal
+    <set >
+      <if test="groupid != null" >
+        groupid = #{groupid,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="shopName != null" >
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPhone != null" >
+        shop_phone = #{shopPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopContacts != null" >
+        shop_contacts = #{shopContacts,jdbcType=VARCHAR},
+      </if>
+      <if test="shopLongitude != null" >
+        shop_longitude = #{shopLongitude,jdbcType=DECIMAL},
+      </if>
+      <if test="shopLatitude != null" >
+        shop_latitude = #{shopLatitude,jdbcType=DECIMAL},
+      </if>
+      <if test="sn != null" >
+        sn = #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where imei = #{imei,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.appmarket.market.bean.TbTerminal" >
+    update tb_terminal
+    set groupid = #{groupid,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=INTEGER},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      shop_phone = #{shopPhone,jdbcType=VARCHAR},
+      shop_contacts = #{shopContacts,jdbcType=VARCHAR},
+      shop_longitude = #{shopLongitude,jdbcType=DECIMAL},
+      shop_latitude = #{shopLatitude,jdbcType=DECIMAL},
+      sn = #{sn,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR}
+    where imei = #{imei,jdbcType=VARCHAR}
+  </update>
+</mapper>
