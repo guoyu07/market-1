@@ -20,11 +20,11 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.kingson</groupId>
-            <artifactId>common</artifactId>
-            <version>${kingson.common.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.kingson</groupId>-->
+            <!--<artifactId>common</artifactId>-->
+            <!--<version>${kingson.common.version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-spring</artifactId>
@@ -237,11 +237,11 @@
             <version>2.8.1</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apkinfo</groupId>
-            <artifactId>api</artifactId>
-            <version>1.0.0</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.apkinfo</groupId>-->
+            <!--<artifactId>api</artifactId>-->
+            <!--<version>1.0.0</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -301,7 +301,7 @@
 
         <!-- kaptcha -->
         <dependency>
-            <groupId>com.google.code.kaptcha</groupId>
+            <groupId>com.github.penggle</groupId>
             <artifactId>kaptcha</artifactId>
             <version>2.3.2</version>
         </dependency>
