@@ -1,0 +1,1 @@
+INSERT INTO app_market.tb_menu (id, parent_id, name, short_en_name, icon, url, orderby, permission_list, status, create_time, update_time) VALUES (106, 1, '用户管理', 'userRegister', '', '/register', 0, 'READ;CREATE;UPDATE;DELETE', 1, now(), now());

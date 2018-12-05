@@ -26,7 +26,6 @@ errorPage：设置错误处理页面 isErrorPage：设置本页面是否为错�
             });
 
             $('#signinBTN').click(function () {
-
                 var index = layer.open({
                     id:1,
                     type: 1,
@@ -41,7 +40,6 @@ errorPage：设置错误处理页面 isErrorPage：设置本页面是否为错�
                     // btn2:function (index,layero) {
                     //     layer.close(index);
                     // }
-
                 });
 
                 $("#cancelRegBTN").click(function() {
