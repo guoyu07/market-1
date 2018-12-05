@@ -25,6 +25,31 @@ errorPage：设置错误处理页面 isErrorPage：设置本页面是否为错�
                 $('#kaptchaImage').hide().attr('src', ctx + '/resources/kaptcha.jpg?' + Math.floor(Math.random() * 100)).fadeIn();
             });
 
+            $('#signinBTN').click(function () {
+
+                var index = layer.open({
+                    id:1,
+                    type: 1,
+                    title:'用户注册',
+                    skin:'layui-layer-rim',
+                    area:['450px', 'auto'],
+                    content:$("#regUser")
+                    // btn:['保存','取消'],
+                    // btn1: function (index,layero) {
+                    //     layer.alert(index)
+                    // },
+                    // btn2:function (index,layero) {
+                    //     layer.close(index);
+                    // }
+
+                });
+
+                $("#cancelRegBTN").click(function() {
+                    layer.close(index);
+                })
+
+            })
+
             $("#frmLogin").validate({
                 rules: {
                     account: {
@@ -45,6 +70,44 @@ errorPage：设置错误处理页面 isErrorPage：设置本页面是否为错�
                 }
             });
         });
+
+        // 检测注册信息完整性
+        function checkRegValue() {
+
+            var isErr = false;
+            var errmsg = "参数错误";
+            var username = $("#username").val();
+            var email = $("#email").val();
+            var pwd = $("#pwd").val();
+            var secondpwd = $("#secondpwd").val();
+
+            var reName = new RegExp("^[a-zA-Z]+$");
+            var reEmil =  /\w@\w*\.\w/;
+
+            if(!$("#mustClick").prop('checked')) {
+                errmsg = "注册用户必须同意协议";
+                isErr = true;
+            }else if(!username || !email || !pwd || !secondpwd) {
+                errmsg = "参数不能为空";
+                isErr = true;
+            }else if(!reName.test(username)) {
+                errmsg = "用户名格式有误";
+                isErr = true;
+            } else if ( pwd != secondpwd ) {
+                errmsg = "两次密码不一致";
+                isErr = true;
+            } else if(!reEmil.test(email)) {
+                errmsg = "邮箱格式有误";
+                isErr = true;
+            }
+
+            if(isErr)
+                layer.msg(errmsg)
+            else {
+                $.post("${ctx}/sys/login")
+            }
+
+        }
 
     </script>
 
@@ -85,8 +148,40 @@ errorPage：设置错误处理页面 isErrorPage：设置本页面是否为错�
         </div>
         <div class="footer">
             <button type="submit" class="btn ${applicationScope.loginBtColor} btn-block">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
+            <button type="button" id="signinBTN" class="btn ${applicationScope.loginBtColor} btn-block">注&nbsp;&nbsp;&nbsp;&nbsp;册</button>
         </div>
     </form>
+
+
+    <div class="row" id="regUser"  style="width: 420px; display:none; margin-left:7px; margin-top:10px;">
+        <div class="col-sm-12">
+            <div class="input-group"><span class="input-group-addon"> 邮   箱   :</span>
+                <input id="email" type="text" class="form-control"placeholder="请输入你的邮箱">
+            </div>
+        </div>
+        <div class="col-sm-12" style="margin-top: 10px">
+            <div class="input-group"><span class="input-group-addon"> 用 户 名  :</span>
+                <input id="username" type="text"class="form-control" placeholder="请输入你的用户名(大小写英文)">
+            </div>
+        </div>
+        <div class="col-sm-12" style="margin-top: 10px">
+            <div class="input-group"><span class="input-group-addon"> 密 码   :</span>
+                <input id="pwd" type="password" class="form-control" placeholder="请输入你的密码"></div>
+        </div>
+        <div class="col-sm-12" style="margin-top: 10px">
+            <div class="input-group"><span class="input-group-addon">确认密码:</span>
+                <input id="secondpwd" type="sedpassword" class="form-control" placeholder="请再输入一次密码"></div>
+        </div>
+
+        <div class="col-sm-12 pull-right" style="margin-top: 10px">
+            <span class="ant-checkbox ant-checkbox-checked"><input type="checkbox" id="mustClick" class="ant-checkbox-input">
+                <span class="ant-checkbox-inner"></span></span>
+            <span><span>同意<a href="${ctx}/resources/agreement.html" target="_blank">《九磊科技公司信息服务条款、隐私政策》</a></span></span>
+            <button type="button" onclick="checkRegValue()" id="regBTN" class="btn  btn-success">注册</button>
+            <button type="button" id="cancelRegBTN" class="btn btn-info">取消</button>
+        </div>
+
+    </div>
 
 </div>
 </body>
